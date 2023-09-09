@@ -11,6 +11,25 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $name = $_POST["name"];
+        $email = $_POST["email"];
+        $message = $_POST["message"];
+        
+        $to = "rdhawan201411@gmail.com"; // Replace with your email address
+        $subject = "New message from $name";
+        $headers = "From: $email";
+    
+        // Send the email
+        mail($to, $subject, $message, $headers);
+        
+        // Optionally, you can redirect the user to a thank-you page
+        header("Location: thank-you.html");
+        exit;
+    }
+    ?>
     <div id="loading">
         <div id="spinner"></div>
     </div>
@@ -87,18 +106,15 @@
                         </div>
                     </td>
                     <td>
-                        <form>
-                            <input type="text" placeholder="name" required>
-                            <input type="email" placeholder="email" required><br>
-                            <textarea placeholder="your message" required rows="5"></textarea><br>
-                            <button class="btn_one">send</button>
-                        </form> 
+                        <form method="post" action="">
+                            <input type="text" name="name" placeholder="Name" required>
+                            <input type="email" name="email" placeholder="Email" required><br>
+                            <textarea name="message" placeholder="Your message" required rows="5"></textarea><br>
+                            <button class="btn_one" type="submit">Send</button>
+                        </form>
                     </td>
                 </tr>
             </table>
-    </div>
-    <div id="footer">
-        made on earth by a human <br> <a href="https://imfunniee.github.io">imfunniee</a>
     </div>
     <script src="index.js" type="text/javascript"></script>
 </body>
