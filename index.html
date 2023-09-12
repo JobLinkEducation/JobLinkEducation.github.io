@@ -1,18 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Appointment Booking</title>
-<script src="appointment_booking.py"></script>
+<title>Book Appointment</title>
 </head>
 <body>
-<h1>Appointment Booking</h1>
-<input type="text" id="hospital" placeholder="Enter the hospital name">
-<button onclick="getDoctors()">Get Doctors</button>
-<div id="doctors"></div>
-<input type="text" id="doctor" placeholder="Enter the doctor name">
-<button onclick="getAppointmentTimes()">Get Appointment Times</button>
-<div id="appointment_times"></div>
-<input type="text" id="appointment_time" placeholder="Enter the appointment time">
+<h1>Book Appointment</h1>
+<p>Please select a hospital and doctor from the list below.</p>
+<select id="hospital">
+<option value="Hospital A">Hospital A</option>
+<option value="Hospital B">Hospital B</option>
+<option value="Hospital C">Hospital C</option>
+</select>
+<select id="doctor">
+<option value="Doctor 1">Doctor 1</option>
+<option value="Doctor 2">Doctor 2</option>
+<option value="Doctor 3">Doctor 3</option>
+</select>
+<p>Available appointment times:</p>
+<ul id="appointment-times"></ul>
 <button onclick="bookAppointment()">Book Appointment</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pyscript/1.16.2/pyscript.min.js"></script>
+<script>
+function bookAppointment() {
+  // Get the selected hospital and doctor.
+  const hospital = document.getElementById("hospital").value;
+  const doctor = document.getElementById("doctor").value;
+
+  // Get the available appointment times.
+  const appointmentTimes = document.getElementById("appointment-times");
+  const appointmentTimesList = appointmentTimes.innerHTML.split(",");
+
+  // Select an appointment time.
+  const appointmentTimeIndex = prompt("Select an appointment time:", appointmentTimesList);
+  const appointmentTime = appointmentTimesList[appointmentTimeIndex];
+
+  // Call the Python script to book the appointment.
+  const py = PyScript({
+    // The path to the Python script.
+    path: "appointment_booking.py",
+    // The arguments to pass to the Python script.
+    args: [hospital, doctor, appointmentTime]
+  });
+
+  // Get the result of the Python script.
+  const result = py.eval("book_appointment()");
+
+  // If the appointment was successfully booked, show a success message.
+  if (result) {
+    alert("Appointment booked successfully!");
+  } else {
+    // Otherwise, show an error message.
+    alert("Failed to book appointment.");
+  }
+}
+</script>
 </body>
 </html>
