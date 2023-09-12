@@ -2,28 +2,17 @@
 <html>
 <head>
 <title>Appointment Booking</title>
+<script src="appointment_booking.py"></script>
 </head>
 <body>
 <h1>Appointment Booking</h1>
-<p>Please select a hospital:</p>
-<select id="hospital">
-<option value="Apollo Hospital">Apollo Hospital</option>
-<option value="Fortis Hospital">Fortis Hospital</option>
-<option value="Max Hospital">Max Hospital</option>
-</select>
+<input type="text" id="hospital" placeholder="Enter the hospital name">
 <button onclick="getDoctors()">Get Doctors</button>
-<script>
-function getDoctors() {
-var hospital = document.getElementById("hospital").value;
-var xhr = new XMLHttpRequest();
-xhr.open("GET", "appointment_booking.py?hospital=" + hospital, true);
-xhr.onload = function() {
-var response = xhr.responseText;
-document.getElementById("doctors").innerHTML = response;
-};
-xhr.send();
-}
-</script>
 <div id="doctors"></div>
+<input type="text" id="doctor" placeholder="Enter the doctor name">
+<button onclick="getAppointmentTimes()">Get Appointment Times</button>
+<div id="appointment_times"></div>
+<input type="text" id="appointment_time" placeholder="Enter the appointment time">
+<button onclick="bookAppointment()">Book Appointment</button>
 </body>
 </html>
